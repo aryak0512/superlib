@@ -1,20 +1,22 @@
 plugins {
-    id("java")
+    base
 }
 
 group = "com.aryak"
-version = "1.0-SNAPSHOT"
+version = "1.0.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
+allprojects {
+    group = rootProject.group
+    version = rootProject.version
+
+    repositories {
+        mavenCentral()
+    }
 }
 
-dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-tasks.test {
-    useJUnitPlatform()
+subprojects {
+    tasks.withType<JavaCompile>().configureEach {
+        options.release.set(17)
+        options.encoding = "UTF-8"
+    }
 }
